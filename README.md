@@ -8,4 +8,4 @@
 - Đỗ Đức Đạt
 - Trương Vĩnh Khang
 
-![Ảnh bìa](/fullstack_ui/src/assets/images/gumball.jpg)
+![Ảnh bìa](/src/assets/images/gumball.jpg)
