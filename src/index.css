@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .menu_item {
+    @apply flex flex-col items-center justify-center w-[4.5rem] h-[4.5rem] mt-1 text-text-color rounded-2xl opacity-90 hover:bg-menu-active-color hover:opacity-100;
+  }
+
+  .menu_item.active {
+    @apply bg-menu-active-color opacity-100;
+  }
+
+  .menu_icon {
+    @apply text-18;
+  }
+
+  .menu_name {
+    @apply text-11 font-semibold;
+  }
+
+  .menu_mobile_list {
+    @apply py-2 mb-3 border-b border-solid border-border-color;
+  }
+
+  .menu_mobile_item {
+    @apply cursor-pointer flex items-center justify-start py-4 pl-4 hover:bg-menu-mobile-active-color rounded-tl rounded-bl transition-all ease-linear duration-150;
+  }
+
+  .menu_mobile_item.active {
+    @apply bg-menu-mobile-active-color opacity-100;
+  }
+
+  .setting_item {
+    @apply text-14 text-text-color-2 hover:text-title-color py-[0.625rem];
+  }
+
+  .line {
+    @apply my-2 bg-border-color;
+  }
+
+  .center_item {
+    @apply absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%];
+  }
+
+  .create_btn-open {
+    @apply rotate-45 scale-150;
+  }
+
+  .overlay {
+    @apply fixed top-0 left-0 w-screen h-screen bg-[rgba(0,0,0,.5)] z-20 transition-all ease-linear duration-300;
+  }
+
+  .sidebar_menu-open {
+    @apply translate-x-0 opacity-100 transition-all ease-linear duration-300;
+  }
+
+  .sidebar_menu-close {
+    @apply translate-x-[-100%] opacity-0 transition-all ease-linear duration-300;
+  }
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+::-moz-selection {
+  /* Code for Firefox */
+  color: #ffffff;
+  background: #f05123;
+}
+
+::selection {
+  color: #ffffff;
+  background: #f05123;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: #d9d9d9;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #cccccc;
+}
+
+/* Custom Dots Slick */
+.slick-dots {
+  bottom: -38px;
+  left: 0;
+  text-align: left;
+}
+
+.slick-dots li {
+  width: 32px;
+  height: 20px;
+  padding: 0;
+  margin-right: 10px;
+}
+
+.slick-dots li button {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+}
+
+.slick-dots li button::before {
+  content: "";
+  background-color: #dce0e3;
+  border-radius: 4px;
+  width: 32px;
+  height: 8px;
+  opacity: 1;
+  transition: all linear 0.3s;
+}
+
+.slick-dots li.slick-active {
+  width: 50px;
+}
+
+.slick-dots li.slick-active button:before {
+  background-color: #9aa6af;
+  width: 50px;
+}
