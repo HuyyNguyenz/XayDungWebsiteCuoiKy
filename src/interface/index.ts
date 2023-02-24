@@ -4,8 +4,8 @@ export interface User {
     password: string;
     image?: string;
     role: string;
-    firstName: string;
-    lastName: string;
+    firstName?: string;
+    lastName?: string;
 }
 
 export interface Course {
@@ -26,4 +26,11 @@ export interface PostsType {
 export interface RouteType {
     path: string;
     component: React.FC;
+}
+
+export interface FormValidate {
+    username?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
 }

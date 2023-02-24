@@ -3,22 +3,19 @@ import { Link, NavLink } from "react-router-dom";
 
 import logo from "../../assets/images/logo_F8.png";
 import useFormValidation from "../../hooks/useFormValidation";
-import { User } from "../../interface";
+import { FormValidate, User } from "../../interface";
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-  const user: User = {
+  const formData: FormValidate = {
     username,
     email,
     password,
-    firstName,
-    lastName,
-    role: "2",
+    confirmPassword,
   };
 
   useEffect(() => {
@@ -29,22 +26,19 @@ const Register: React.FC = () => {
       const errorMessage: HTMLSpanElement = document.querySelector(
         `#${id}+.message`
       ) as HTMLSpanElement;
-      const validatedResult: User = useFormValidation(user);
+      const validatedData: FormValidate = useFormValidation(formData);
       switch (id) {
         case "username":
-          errorMessage.innerText = validatedResult.username;
+          errorMessage.innerText = validatedData.username as string;
           break;
         case "email":
-          errorMessage.innerText = validatedResult.email;
+          errorMessage.innerText = validatedData.email as string;
           break;
         case "password":
-          errorMessage.innerText = validatedResult.password;
+          errorMessage.innerText = validatedData.password as string;
           break;
-        case "firstName":
-          errorMessage.innerText = validatedResult.firstName;
-          break;
-        case "lastName":
-          errorMessage.innerText = validatedResult.lastName;
+        case "confirm_password":
+          errorMessage.innerText = validatedData.confirmPassword as string;
           break;
       }
     };
@@ -64,10 +58,7 @@ const Register: React.FC = () => {
         case "password":
           errorMessage.innerText = "";
           break;
-        case "firstName":
-          errorMessage.innerText = "";
-          break;
-        case "lastName":
+        case "confirm_password":
           errorMessage.innerText = "";
           break;
       }
@@ -98,19 +89,18 @@ const Register: React.FC = () => {
     });
 
     handleActiveSubmit();
-  }, [username, email, password, firstName, lastName]);
+  }, [username, email, password, confirmPassword]);
 
   const handleActiveSubmit = () => {
     const btnSubmit: HTMLInputElement = document.querySelector(
       "#buttonSubmit"
     ) as HTMLInputElement;
-    const validatedResult: User = useFormValidation(user);
+    const validatedData: FormValidate = useFormValidation(formData);
     const errorValidated: boolean =
-      validatedResult.username !== "" ||
-      validatedResult.email !== "" ||
-      validatedResult.password !== "" ||
-      validatedResult.firstName !== "" ||
-      validatedResult.lastName !== "";
+      validatedData.username !== "" ||
+      validatedData.email !== "" ||
+      validatedData.password !== "" ||
+      validatedData.confirmPassword !== "";
 
     if (errorValidated) {
       btnSubmit.classList.remove("cursor-pointer");
@@ -129,7 +119,13 @@ const Register: React.FC = () => {
     const errorValidated: boolean = handleActiveSubmit();
     // Nếu không có lỗi validate thì submit form
     if (!errorValidated) {
-      console.log(user);
+      const userData: User = {
+        username,
+        email,
+        password,
+        role: "2",
+      };
+      console.log(userData);
     }
   };
 
@@ -209,40 +205,21 @@ const Register: React.FC = () => {
               <div className="mt-4 flex flex-col justify-start items-start">
                 <label
                   className="text-title-color font-semibold mb-2"
-                  htmlFor="firstName"
+                  htmlFor="confirm_password"
                 >
-                  Họ và tên lót
+                  Nhập lại mật khẩu
                 </label>
                 <input
                   onChange={(e: BaseSyntheticEvent) =>
-                    setFirstName(e.target.value)
+                    setConfirmPassword(e.target.value)
                   }
                   className="input_item py-3 px-5 rounded-full border border-solid border-border-color bg-border-color outline-none w-full placeholder:text-text-color-2"
-                  type="text"
-                  name="firstName"
-                  id="firstName"
-                  value={firstName}
-                  placeholder="Họ và tên lót của bạn"
-                />
-                <span className="message text-14 text-red-600"></span>
-              </div>
-              <div className="mt-4 flex flex-col justify-start items-start">
-                <label
-                  className="text-title-color font-semibold mb-2"
-                  htmlFor="lastName"
-                >
-                  Tên của bạn
-                </label>
-                <input
-                  onChange={(e: BaseSyntheticEvent) =>
-                    setLastName(e.target.value)
-                  }
-                  className="input_item py-3 px-5 rounded-full border border-solid border-border-color bg-border-color outline-none w-full placeholder:text-text-color-2"
-                  type="text"
-                  name="lastName"
-                  id="lastName"
-                  value={lastName}
-                  placeholder="Tên của bạn"
+                  maxLength={32}
+                  type="password"
+                  name="confirm_password"
+                  id="confirm_password"
+                  value={confirmPassword}
+                  placeholder="Nhập lại mật khẩu"
                 />
                 <span className="message text-14 text-red-600"></span>
               </div>
