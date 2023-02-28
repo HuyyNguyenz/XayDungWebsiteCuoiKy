@@ -39,15 +39,10 @@ const Footer: React.FC = () => {
               </p>
             </div>
             <div className="pt-5">
-              <a
-                target={"_blank"}
-                href="https://www.dmca.com/Protection/Status.aspx?id=1b325c69-aeb7-4e32-8784-a0009613323a&refurl=https%3a%2f%2ffullstack.edu.vn%2f&rlo=true"
-              >
-                <img
-                  src="https://fullstack.edu.vn/static/media/dmca.2593d9ecf1c982e3c3a2.png"
-                  alt="dcma"
-                />
-              </a>
+              <img
+                src="https://fullstack.edu.vn/static/media/dmca.2593d9ecf1c982e3c3a2.png"
+                alt="dcma"
+              />
             </div>
           </div>
 

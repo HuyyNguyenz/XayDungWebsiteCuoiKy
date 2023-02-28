@@ -8,6 +8,16 @@ const useFormValidation = (formData: FormValidate) => {
         confirmPassword: (formData.confirmPassword as string) !== (formData.password as string) ? 'Mật khẩu không trùng khớp' : ''
     }
 
+    if (formData.username === '') {
+        validatedData.username = 'Mời bạn nhập username';
+    } if (formData.email === '') {
+        validatedData.email = 'Mời bạn nhập email';
+    } if (formData.password === '') {
+        validatedData.password = 'Mời bạn nhập password';
+    } if (formData.confirmPassword === '') {
+        validatedData.confirmPassword = 'Mời bạn nhập confirm password';
+    }
+
     return validatedData;
 }
 

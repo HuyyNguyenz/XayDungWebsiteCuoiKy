@@ -56,6 +56,7 @@ const Home: React.FC = () => {
       username: "sondn@gmail.com",
       image: logo,
       role: "admin",
+      password: "",
     },
     image: postImg,
     views: 100,
