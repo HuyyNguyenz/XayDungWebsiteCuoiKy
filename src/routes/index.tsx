@@ -1,10 +1,11 @@
 import { lazy, Suspense } from "react";
 
 import { RouteType } from "../interface";
+import CourseDetail from "../pages/CourseDetail";
 import Courses from "../pages/Courses";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
-import Register from "../pages/Register/Register";
+import Register from "../pages/Register";
 import RoadMap from "../pages/RoadMap";
 import RoadMapBackEnd from "../pages/RoadMapBackEnd";
 import RoadMapFrontEnd from "../pages/RoadMapFrontEnd";
@@ -42,6 +43,7 @@ const publicRoutes: Array<RouteType> = [
     path: "/register",
     component: Register,
   },
+  { path: "/courses/coursesDetail", component: CourseDetail },
 ];
 
 const privateRoutes: Array<RouteType> = [];

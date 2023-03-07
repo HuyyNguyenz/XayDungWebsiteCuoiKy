@@ -1,21 +1,48 @@
 import { BaseSyntheticEvent, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavigateFunction, NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-import logo from "../../assets/images/logo_F8.png";
+import logo from "../../assets/images/logo.png";
 import useFormValidation from "../../hooks/useFormValidation";
 import { FormValidate, User } from "../../interface";
+import { root } from "../../utils";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const navigate: NavigateFunction = useNavigate();
 
   const formData: FormValidate = {
     username,
     email,
     password,
     confirmPassword,
+  };
+
+  interface Notify {
+    type: string;
+    time: number;
+  }
+
+  const notify = (message: string, { type, time }: Notify) => {
+    switch (type) {
+      case "SUCCESS":
+        toast.success(message, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: time,
+        });
+        break;
+      case "ERROR":
+        toast.error(message, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: time,
+        });
+        break;
+    }
   };
 
   useEffect(() => {
@@ -93,7 +120,7 @@ const Register: React.FC = () => {
 
   const handleActiveSubmit = () => {
     const btnSubmit: HTMLInputElement = document.querySelector(
-      "#buttonSubmit"
+      "#register"
     ) as HTMLInputElement;
     const validatedData: FormValidate = useFormValidation(formData);
     const errorValidated: boolean =
@@ -115,7 +142,8 @@ const Register: React.FC = () => {
     return errorValidated;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: BaseSyntheticEvent) => {
+    e.preventDefault();
     const errorValidated: boolean = handleActiveSubmit();
     // Nếu không có lỗi validate thì submit form
     if (!errorValidated) {
@@ -123,9 +151,29 @@ const Register: React.FC = () => {
         username,
         email,
         password,
-        role: "2",
+        role_id: "2",
       };
-      console.log(userData);
+      axios
+        .post(`${root}/api/register`, userData)
+        .then((res) => {
+          if (res.data.status === true) {
+            sessionStorage.setItem("user-data", res.data.data);
+            notify("Đăng ký tài khoản thành công", {
+              type: "SUCCESS",
+              time: 1500,
+            });
+            setTimeout(() => {
+              navigate("/login");
+            }, 2500);
+          }
+        })
+        .catch((error) => {
+          notify("Tên đăng nhập hoặc email đã được đăng ký", {
+            type: "ERROR",
+            time: 1500,
+          });
+          console.log(error.response.data.message);
+        });
     }
   };
 
@@ -137,7 +185,7 @@ const Register: React.FC = () => {
             <img src={logo} alt="logo_F8" className="w-11 h-11 rounded-lg" />
           </NavLink>
           <h1 className="text-28 font-bold text-title-color my-5">
-            Đăng ký tài khoản F8
+            Đăng ký tài khoản ITGangz
           </h1>
 
           <div className="w-[17.5rem] md:w-[23.75rem] mt-6 text-14 text-text-color">
@@ -226,9 +274,9 @@ const Register: React.FC = () => {
               <input
                 onClick={handleSubmit}
                 className="mt-6 w-full py-2 bg-gradient-to-br from-purple-color to-pink-color text-white text-16 font-semibold rounded-full cursor-pointer select-none"
-                type="button"
-                name="buttonSubmit"
-                id="buttonSubmit"
+                type="submit"
+                name="register"
+                id="register"
                 value="Đăng ký"
               />
             </form>
@@ -243,6 +291,7 @@ const Register: React.FC = () => {
         </div>
       </div>
       <div className="overlay opacity-50"></div>
+      <ToastContainer />
     </div>
   );
 };

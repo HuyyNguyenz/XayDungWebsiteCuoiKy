@@ -1,10 +1,12 @@
-import { BaseSyntheticEvent, useEffect, useState } from "react";
+import { BaseSyntheticEvent, useState } from "react";
 import { Link, NavigateFunction, NavLink, useNavigate } from "react-router-dom";
 
 import { faSquareFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import logo from "../../assets/images/logo_F8.png";
+import logo from "../../assets/images/logo.png";
+import axios from "axios";
+import { root } from "../../utils";
 
 const Login: React.FC = () => {
   const [isOpenLoginForm, setOpenLoginForm] = useState<boolean>(false);
@@ -20,13 +22,12 @@ const Login: React.FC = () => {
     setOpenLoginForm(false);
   };
 
-  const handleLogin = () => {
-    if (username === "admin" && password === "admin") {
-      alert("Success");
-      navigate("/");
-    } else {
-      alert("Failed");
-    }
+  const handleLogin = (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    axios
+      .post(`${root}/api/login`, { username, password })
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error.response.data.message));
   };
 
   return (
@@ -37,7 +38,7 @@ const Login: React.FC = () => {
             <img src={logo} alt="logo_F8" className="w-11 h-11 rounded-lg" />
           </NavLink>
           <h1 className="text-28 font-bold text-title-color my-5">
-            Đăng nhập vào F8
+            Đăng nhập vào ITGangz
           </h1>
 
           {isOpenLoginForm ? (
@@ -86,9 +87,9 @@ const Login: React.FC = () => {
                 <input
                   onClick={handleLogin}
                   className="mt-6 w-full py-2 bg-gradient-to-br from-purple-color to-pink-color text-white text-16 font-semibold rounded-full cursor-pointer"
-                  type="button"
-                  name="buttonSubmit"
-                  id="buttonSubmit"
+                  type="submit"
+                  name="login"
+                  id="login"
                   value="Đăng nhập"
                 />
               </form>

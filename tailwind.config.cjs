@@ -8,7 +8,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        "primary-color": "#f05123",
+        "primary-color": "#0c2840",
         "title-color": "#000000",
         "text-color": "#292929",
         "text-color-2": "#7c7c7c",
@@ -58,7 +58,7 @@ module.exports = {
         "bottom-up": "bottom-up .3s ease-in-out",
       },
       backgroundImage: {
-        "login-background": "url('/src/assets/images/f8_background_login.png')",
+        "login-background": "url('/src/assets/images/bg_login_register.jpg')",
       },
     },
   },

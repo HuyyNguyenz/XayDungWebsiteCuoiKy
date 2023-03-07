@@ -13,10 +13,10 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { BaseSyntheticEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import logo from "../../assets/images/logo_F8.png";
+import logo from "../../assets/images/logo.png";
 
 interface Props {
   menuRef: React.RefObject<HTMLDivElement>;

@@ -67,12 +67,12 @@ html {
 ::-moz-selection {
   /* Code for Firefox */
   color: #ffffff;
-  background: #f05123;
+  background: #0c2840;
 }
 
 ::selection {
   color: #ffffff;
-  background: #f05123;
+  background: #0c2840;
 }
 
 /* width */

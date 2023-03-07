@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import logo from "../../assets/images/logo_F8.png";
+import logo from "../../assets/images/logo.png";
 import { User } from "../../interface";
 import Notify from "../Notify";
 import Search from "../Search";
@@ -14,16 +14,6 @@ const Header: React.FC = () => {
   const [isLogin] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
-
-  const userData: User = {
-    username: "sondn@gmail.com",
-    email: "sondn@gmail.com",
-    password: "",
-    firstName: "Sơn",
-    lastName: "Đặng",
-    image: logo,
-    role: "admin",
-  };
 
   const handleOpenMenu = () => {
     menuRef.current?.classList.remove("sidebar_menu-close");
@@ -46,7 +36,7 @@ const Header: React.FC = () => {
           </NavLink>
           <div className="pl-4 py-5">
             <h4 className="text-title-color font-bold text-14">
-              Học Lập Trình Để Đi Làm
+              Học Lập Trình Cùng ITGangz
             </h4>
           </div>
         </div>
@@ -67,7 +57,6 @@ const Header: React.FC = () => {
               Khoá học của tôi
             </button>
             <Notify />
-            <UserSetting data={userData} />
           </div>
         ) : (
           <div className="flex items-center justify-start">

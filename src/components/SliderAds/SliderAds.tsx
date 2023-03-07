@@ -28,7 +28,7 @@ const SliderAds: React.FC = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     draggable: false,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 7000,
   };
 

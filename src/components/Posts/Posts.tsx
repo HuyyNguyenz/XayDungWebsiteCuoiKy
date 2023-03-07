@@ -40,13 +40,13 @@ const Post: React.FC<Props> = (props) => {
           <span>
             {posts.author.firstName} {posts.author.lastName}
           </span>
-          {posts.author.role === "admin" ? (
+          {/* {posts.author.role === "admin" ? (
             <div className="text-check-color ml-1">
               <FontAwesomeIcon icon={faCircleCheck} />
             </div>
           ) : (
             ""
-          )}
+          )} */}
         </div>
         <span className="text-14 text-text-color-2 ml-2">{views} lượt xem</span>
       </div>

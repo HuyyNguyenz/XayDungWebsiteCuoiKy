@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import logo from "../../assets/images/logo_F8.png";
+import logo from "../../assets/images/logo.png";
 
 const Footer: React.FC = () => {
   return (
@@ -14,41 +13,32 @@ const Footer: React.FC = () => {
                 alt="logo_F8"
               />
               <h2 className="text-16 font-bold text-white">
-                Học Lập Trình Để Đi Làm
+                Học Lập Trình Cùng ITGangz
               </h2>
             </div>
             <div className="text-14 text-text-color-3 my-4">
               <p>
                 Điện thoại:{" "}
-                <a className="hover:opacity-80" href="tel:0246.329.1102">
-                  0246.329.1102
+                <a className="hover:opacity-80" href="tel:0382594757">
+                  0382594757
                 </a>
               </p>
               <p>
                 Email:{" "}
                 <a
                   className="hover:opacity-80"
-                  href="mailto:contact@fullstack.edu.vn"
+                  href="mailto:nguyenhuydz3@gmail.com"
                 >
-                  contact@fullstack.edu.vn
+                  nguyenhuydz3@gmail.com
                 </a>
               </p>
-              <p>
-                Địa chỉ: Nhà D9, lô A10, Nam Trung Yên, Trung Hòa, Cầu Giấy, Hà
-                Nội
-              </p>
-            </div>
-            <div className="pt-5">
-              <img
-                src="https://fullstack.edu.vn/static/media/dmca.2593d9ecf1c982e3c3a2.png"
-                alt="dcma"
-              />
+              <p>Địa chỉ: 180 Cao Lỗ, Phường 04, Quận 8</p>
             </div>
           </div>
 
           <div className="lg:my-0 lg:mx-auto pb-6">
             <h2 className="text-18 font-semibold text-white uppercase my-3">
-              Về F8
+              Về ITGangz
             </h2>
             <ul className="text-14 text-text-color-3">
               <li className="hover:text-white py-1 cursor-pointer">
@@ -98,14 +88,14 @@ const Footer: React.FC = () => {
 
           <div className="lg:my-0 lg:mx-auto pb-6">
             <h2 className="text-18 font-semibold text-white uppercase my-3">
-              Công ty cổ phần công nghệ giáo dục F8
+              Công ty cổ phần công nghệ giáo dục ITGangz
             </h2>
             <ul className="text-14 text-text-color-3">
-              <li className="py-1">Mã số thuế: 0109922901</li>
-              <li className="py-1">Ngày thành lập: 04/03/2022</li>
+              <li className="py-1">Mã số thuế: 0123456789</li>
+              <li className="py-1">Ngày thành lập: 31/05/2022</li>
               <li className="py-1">
-                Lĩnh vực: Công nghệ, giáo dục, lập trình. F8 xây dựng và phát
-                triển những sản phẩm mang lại giá trị cho cộng đồng.
+                Lĩnh vực: Công nghệ, giáo dục, lập trình. ITGangz xây dựng và
+                phát triển những sản phẩm mang lại giá trị cho cộng đồng.
               </li>
             </ul>
           </div>

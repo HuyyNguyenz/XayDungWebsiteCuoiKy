@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react/headless";
 import { useState } from "react";
 import NotifyItem from "../NotifyItem";
-import logo from "../../assets/images/logo_F8.png";
+import logo from "../../assets/images/logo.png";
 
 const Notify: React.FC = () => {
   const [showNotify, setShowNotify] = useState<boolean>(false);

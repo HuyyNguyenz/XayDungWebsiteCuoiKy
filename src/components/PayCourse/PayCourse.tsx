@@ -1,4 +1,5 @@
 import { Course } from "../../interface";
+import { root } from "../../utils";
 
 interface Props {
   course: Course;
@@ -10,12 +11,12 @@ const PayCourse: React.FC<Props> = (props) => {
   const price: string = new Intl.NumberFormat("vi-vn", {
     style: "currency",
     currency: "VND",
-  }).format(course.price);
+  }).format(Number(course.price));
 
   const priceSale: string = new Intl.NumberFormat("vi-vn", {
     style: "currency",
     currency: "VND",
-  }).format(course.priceSale);
+  }).format(Number(course.price_sale));
 
   return (
     <div className="w-[60vw] mr-4 mb-4 flex-shrink-0 md:w-full md:flex-shrink-0 md:mb-0 md:mr-0">
@@ -23,7 +24,7 @@ const PayCourse: React.FC<Props> = (props) => {
         <div className="w-full">
           <img
             className="w-full h-full rounded-2xl object-cover"
-            src={course.image}
+            src={`${root}/users/image/${course.image}`}
             alt={course.name}
           />
         </div>

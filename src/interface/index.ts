@@ -3,17 +3,19 @@ export interface User {
     email: string;
     password: string;
     image?: string;
-    role: string;
+    role_id: string;
     firstName?: string;
     lastName?: string;
 }
 
 export interface Course {
+    id: string;
     name: string;
     price: number;
-    priceSale: number;
+    price_sale: number;
     image: string;
-    subscribers: number;
+    description: string;
+    category_id: string;
 }
 
 export interface PostsType {
