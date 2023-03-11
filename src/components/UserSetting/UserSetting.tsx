@@ -1,6 +1,9 @@
 import Tippy from "@tippyjs/react/headless";
 import { useState } from "react";
 import { User } from "../../interface";
+import userImg from "../../assets/images/user.png";
+import { root } from "../../utils";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 interface Props {
   data: User;
@@ -9,6 +12,7 @@ interface Props {
 const UserSetting: React.FC<Props> = (props) => {
   const [showUserSetting, setShowUserSetting] = useState<boolean>(false);
   const { data } = props;
+  const navigate: NavigateFunction = useNavigate();
 
   const handleToggleUserSetting = () => {
     setShowUserSetting(!showUserSetting);
@@ -16,6 +20,11 @@ const UserSetting: React.FC<Props> = (props) => {
 
   const handleHideUserSetting = () => {
     setShowUserSetting(false);
+  };
+
+  const handleLogOut = () => {
+    sessionStorage.removeItem("user_token");
+    navigate("/login");
   };
 
   return (
@@ -27,7 +36,7 @@ const UserSetting: React.FC<Props> = (props) => {
         onClickOutside={handleHideUserSetting}
         render={(attrs) => (
           <div
-            className="w-60 px-6 py-2 rounded-[0.625rem] bg-white shadow-[0_-4px_32px_rgba(0,0,0,0.2)] animate-fade"
+            className="min-w-60 px-6 py-2 rounded-[0.625rem] bg-white shadow-[0_-4px_32px_rgba(0,0,0,0.2)] animate-fade"
             tabIndex={-1}
             {...attrs}
           >
@@ -35,17 +44,17 @@ const UserSetting: React.FC<Props> = (props) => {
               <div className="w-12 h-12 my-[0.625rem]">
                 <img
                   className="w-full h-full rounded-full object-cover"
-                  src={data.image}
-                  alt="user_img"
+                  src={
+                    data.image ? `${root}/users/image/${data.image}` : userImg
+                  }
+                  alt={data.username}
                 />
               </div>
-              <div className="flex-1 ml-3">
-                <span className="inline-block text-16 font-semibold text-text-color">
-                  {data.firstName} {data.lastName}
-                </span>
-                <span className="inline-block text-14 text-text-color-2">
+              <div className="flex flex-1 ml-3 flex-col items-start justify-start">
+                <span className=" text-16 font-semibold text-text-color">
                   {data.username}
                 </span>
+                <span className=" text-14 text-text-color-2">{data.email}</span>
               </div>
             </div>
             <hr className="line" />
@@ -59,7 +68,12 @@ const UserSetting: React.FC<Props> = (props) => {
               <li className="setting_item">Mã giới thiệu của bạn</li>
               <hr className="line" />
               <li className="setting_item">Cài đặt</li>
-              <li className="setting_item">Đăng xuất</li>
+              <li
+                onClick={handleLogOut}
+                className="setting_item cursor-pointer"
+              >
+                Đăng xuất
+              </li>
             </ul>
           </div>
         )}
@@ -70,8 +84,8 @@ const UserSetting: React.FC<Props> = (props) => {
         >
           <img
             className="w-full h-full rounded-full"
-            src={data.image}
-            alt="user_avatar"
+            src={data.image ? `${root}/users/image/${data.image}` : userImg}
+            alt={data.username}
           />
         </div>
       </Tippy>

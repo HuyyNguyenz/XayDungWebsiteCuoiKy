@@ -42,6 +42,7 @@ module.exports = {
         24: "24px",
         28: "28px",
         32: "32px",
+        60: "60px",
       },
       keyframes: {
         fade: {

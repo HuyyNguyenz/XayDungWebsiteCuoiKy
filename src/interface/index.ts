@@ -18,6 +18,22 @@ export interface Course {
     category_id: string;
 }
 
+export interface PartVideo {
+    id: string;
+    name: string;
+    course_id: string;
+}
+
+export interface Video {
+    id: string;
+    title: string;
+    description: string;
+    link: string;
+    duration: string;
+    date_posted: string;
+    part_id: string;
+}
+
 export interface PostsType {
     title: string;
     image: string;

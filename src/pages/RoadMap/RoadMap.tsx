@@ -5,6 +5,7 @@ import DefaultLayout from "../../layouts/DefaultLayout";
 import bannerFe from "../../assets/images/banner_fe.png";
 import bannerBe from "../../assets/images/banner_be.png";
 import bannerFbGroup from "../../assets/images/fb-group-card.png";
+import { Helmet } from "react-helmet";
 
 const RoadMap: React.FC = () => {
   useEffect(() => {
@@ -13,6 +14,9 @@ const RoadMap: React.FC = () => {
 
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>Lộ trình học cho người mới tại ITGangz</title>
+      </Helmet>
       <div className="flex-1 p-4 mb-20 md:px-8 lg:px-12 w-full overflow-hidden">
         <section>
           <div className="mb-20">

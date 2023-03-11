@@ -6,6 +6,7 @@ import PayCourse from "../../components/PayCourse";
 import { Course } from "../../interface";
 import axios from "axios";
 import { root } from "../../utils";
+import { Helmet } from "react-helmet";
 
 const RoadMapFrontEnd: React.FC = () => {
   const [courses, setCourses] = useState<Array<Course>>([]);
@@ -14,13 +15,19 @@ const RoadMapFrontEnd: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    axios.get(`${root}/api/courses`).then((res) => {
-      setCourses(res.data.data);
-    });
+    const getCourses = async () => {
+      await axios.get(`${root}/api/courses`).then((res) => {
+        setCourses(res.data.data);
+      });
+    };
+    getCourses();
   }, []);
 
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>Lộ trình Front-end tại ITGangz</title>
+      </Helmet>
       <div className="flex-1 p-4 mb-20 md:px-8 lg:px-12 w-full overflow-hidden">
         <section>
           <div className="max-w-[52.5rem]">

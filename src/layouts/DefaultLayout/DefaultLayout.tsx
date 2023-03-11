@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import FullStackNews from "../../components/FullStackNews";
 import Header from "../../components/Header";
@@ -9,7 +9,9 @@ interface Props {
 }
 
 const DefaultLayout: React.FC<Props> = ({ children }) => {
-  const [isLogin, setLogin] = useState<boolean>(false);
+  const [isLogin, setLogin] = useState<boolean>(
+    !!sessionStorage.getItem("user_token")
+  );
 
   return (
     <div className="font-montserrat">

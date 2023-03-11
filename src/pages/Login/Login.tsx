@@ -7,12 +7,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../../assets/images/logo.png";
 import axios from "axios";
 import { root } from "../../utils";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Helmet } from "react-helmet";
 
 const Login: React.FC = () => {
   const [isOpenLoginForm, setOpenLoginForm] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate: NavigateFunction = useNavigate();
+
+  interface Notify {
+    type: string;
+    time: number;
+  }
+
+  const notify = (message: string, { type, time }: Notify) => {
+    switch (type) {
+      case "SUCCESS":
+        toast.success(message, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: time,
+        });
+        break;
+      case "ERROR":
+        toast.error(message, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: time,
+        });
+        break;
+    }
+  };
 
   const handleOpenLoginForm = () => {
     setOpenLoginForm(true);
@@ -24,14 +49,35 @@ const Login: React.FC = () => {
 
   const handleLogin = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    axios
-      .post(`${root}/api/login`, { username, password })
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log(error.response.data.message));
+    const checkLogin = async () => {
+      await axios
+        .post(`${root}/api/login`, { username: username, password: password })
+        .then((res) => {
+          if (res.data.status === "true") {
+            sessionStorage.setItem("user_token", res.data.userID);
+            sessionStorage.setItem("auto", "true");
+            notify("Đăng nhập thành công", { type: "SUCCESS", time: 1500 });
+            setTimeout(() => {
+              navigate("/");
+            }, 2500);
+          }
+        })
+        .catch((error) => {
+          notify("Tên đăng nhập hoặc mật khẩu không đúng", {
+            type: "ERROR",
+            time: 1500,
+          });
+          console.log(error.response.data.message);
+        });
+    };
+    checkLogin();
   };
 
   return (
     <div className="relative bg-login-background w-screen h-screen bg-cover font-montserrat overflow-hidden">
+      <Helmet>
+        <title>Đăng nhập vào ITGangz</title>
+      </Helmet>
       <div className="bg-white rounded-lg min-h-[31.5rem] max-w-[calc(100vw-32px)] md:max-w-[37.5rem] w-full px-4 py-12 center_item z-30">
         <div className="flex flex-col justify-start items-center">
           <NavLink to="/">
@@ -163,6 +209,7 @@ const Login: React.FC = () => {
         )}
       </div>
       <div className="overlay opacity-50"></div>
+      <ToastContainer />
     </div>
   );
 };

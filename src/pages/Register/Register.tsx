@@ -8,6 +8,7 @@ import { FormValidate, User } from "../../interface";
 import { root } from "../../utils";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Helmet } from "react-helmet";
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -153,32 +154,38 @@ const Register: React.FC = () => {
         password,
         role_id: "2",
       };
-      axios
-        .post(`${root}/api/register`, userData)
-        .then((res) => {
-          if (res.data.status === true) {
-            sessionStorage.setItem("user-data", res.data.data);
-            notify("Đăng ký tài khoản thành công", {
-              type: "SUCCESS",
+      const checkRegister = async () => {
+        await axios
+          .post(`${root}/api/register`, userData)
+          .then((res) => {
+            if (res.data.status === true) {
+              sessionStorage.setItem("user-data", res.data.data);
+              notify("Đăng ký tài khoản thành công", {
+                type: "SUCCESS",
+                time: 1500,
+              });
+              setTimeout(() => {
+                navigate("/login");
+              }, 2500);
+            }
+          })
+          .catch((error) => {
+            notify("Tên đăng nhập hoặc email đã được đăng ký", {
+              type: "ERROR",
               time: 1500,
             });
-            setTimeout(() => {
-              navigate("/login");
-            }, 2500);
-          }
-        })
-        .catch((error) => {
-          notify("Tên đăng nhập hoặc email đã được đăng ký", {
-            type: "ERROR",
-            time: 1500,
+            console.log(error.response.data.message);
           });
-          console.log(error.response.data.message);
-        });
+      };
+      checkRegister();
     }
   };
 
   return (
     <div className="relative bg-login-background w-screen h-screen bg-cover font-montserrat overflow-hidden">
+      <Helmet>
+        <title>Đăng ký tài khoản ITGangz</title>
+      </Helmet>
       <div className="bg-white rounded-lg center_item z-30 overflow-hidden">
         <div className="flex flex-col justify-start items-center max-h-[37.5rem] w-full md:w-[37.5rem] md:px-4 px-8 py-12 overflow-y-scroll">
           <NavLink to="/">

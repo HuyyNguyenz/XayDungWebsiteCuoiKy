@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import htmlCssCourse from "../../assets/images/free_course.png";
 import { Course } from "../../interface";
 import { root } from "../../utils";
@@ -45,9 +46,11 @@ const CoursePreview: React.FC<Props> = (props) => {
         <p className="text-14 text-text-color my-2 line-clamp-2">
           {course.description}
         </p>
-        <button className="w-full md:max-w-[8.5rem] text-14 text-white bg-primary-color rounded-full px-4 py-2 font-semibold hover:opacity-90">
-          Xem khoá học
-        </button>
+        <NavLink to={`/courses/${course.id}`}>
+          <button className="w-full md:max-w-[8.5rem] text-14 text-white bg-primary-color rounded-full px-4 py-2 font-semibold hover:opacity-90">
+            Xem khoá học
+          </button>
+        </NavLink>
       </div>
     </div>
   );

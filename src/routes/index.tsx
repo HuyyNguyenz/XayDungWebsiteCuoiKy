@@ -43,7 +43,7 @@ const publicRoutes: Array<RouteType> = [
     path: "/register",
     component: Register,
   },
-  { path: "/courses/coursesDetail", component: CourseDetail },
+  { path: "/courses/:courseId", component: CourseDetail },
 ];
 
 const privateRoutes: Array<RouteType> = [];

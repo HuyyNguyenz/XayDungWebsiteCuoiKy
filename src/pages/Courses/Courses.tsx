@@ -9,6 +9,7 @@ import PayCourse from "../../components/PayCourse";
 import FreeCourse from "../../components/FreeCourse";
 import axios from "axios";
 import { root } from "../../utils";
+import { Helmet } from "react-helmet";
 
 const Courses: React.FC = () => {
   const [payCourses, setPayCourses] = useState<Array<Course>>([]);
@@ -22,21 +23,27 @@ const Courses: React.FC = () => {
     const payCourses: Array<Course> = [];
     const freeCourses: Array<Course> = [];
 
-    axios.get(`${root}/api/courses`).then((res) => {
-      res.data.data.map((item: Course) => {
-        if (Number(item.price) > 0) {
-          payCourses.push(item);
-          setPayCourses(payCourses);
-        } else {
-          freeCourses.push(item);
-          setFreeCourses(freeCourses);
-        }
+    const getCourses = async () => {
+      await axios.get(`${root}/api/courses`).then((res) => {
+        res.data.data.map((item: Course) => {
+          if (Number(item.price) > 0) {
+            payCourses.push(item);
+            setPayCourses(payCourses);
+          } else {
+            freeCourses.push(item);
+            setFreeCourses(freeCourses);
+          }
+        });
       });
-    });
+    };
+    getCourses();
   }, []);
 
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>Danh sách các khoá học lập trình tại ITGangz</title>
+      </Helmet>
       <div className="flex-1 p-4 mb-20 md:px-8 lg:px-12 w-full overflow-hidden">
         <section>
           <div className="mb-20">
@@ -73,7 +80,11 @@ const Courses: React.FC = () => {
 
             <div className="flex items-center w-full overflow-y-hidden overflow-x-scroll md:flex-none md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
               {freeCourses.map((course) => {
-                return <FreeCourse key={course.id} course={course} />;
+                return (
+                  <NavLink key={course.id} to={`/courses/${course.id}`}>
+                    <FreeCourse course={course} />
+                  </NavLink>
+                );
               })}
             </div>
           </div>

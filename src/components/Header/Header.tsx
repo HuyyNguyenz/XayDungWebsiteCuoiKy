@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -9,9 +9,22 @@ import Notify from "../Notify";
 import Search from "../Search";
 import SidebarMenuMobile from "../SidebarMenuMobile";
 import UserSetting from "../UserSetting";
+import axios from "axios";
+import { root } from "../../utils";
 
 const Header: React.FC = () => {
-  const [isLogin] = useState<boolean>(false);
+  const [isLogin, setLogin] = useState<boolean>(
+    !!sessionStorage.getItem("user_token")
+  );
+  const [userData, setUserData] = useState<User>({
+    username: "",
+    email: "",
+    password: "",
+    image: "",
+    role_id: "",
+    firstName: "",
+    lastName: "",
+  });
   const menuRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -22,6 +35,27 @@ const Header: React.FC = () => {
     overlayRef.current?.classList.add("overlay");
     document.body.classList.add("overflow-hidden");
   };
+
+  useEffect(() => {
+    const user_token: string = sessionStorage.getItem("user_token") as string;
+    const getUserData = async () => {
+      await axios
+        .post(`${root}/api/account`, { id: user_token })
+        .then((res) => {
+          const data: User = res.data && {
+            username: res.data.username,
+            email: res.data.email,
+            password: res.data.password,
+            image: res.data.image,
+            role_id: res.data.role_id,
+            firstName: res.data.first_name,
+            lastName: res.data.last_name,
+          };
+          setUserData(data);
+        });
+    };
+    getUserData();
+  }, []);
 
   return (
     <header className="sticky top-0 left-0 right-0 z-30 bg-white">
@@ -57,6 +91,7 @@ const Header: React.FC = () => {
               Khoá học của tôi
             </button>
             <Notify />
+            <UserSetting data={userData} />
           </div>
         ) : (
           <div className="flex items-center justify-start">

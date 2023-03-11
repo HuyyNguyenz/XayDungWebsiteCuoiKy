@@ -1,9 +1,14 @@
+import { NavLink } from "react-router-dom";
+import { Course } from "../../interface";
+import { root } from "../../utils";
+
 interface Props {
   title: string;
+  data: Array<Course>;
 }
 
 const SearchResult: React.FC<Props> = (props) => {
-  const { title } = props;
+  const { title, data } = props;
 
   return (
     <>
@@ -14,95 +19,28 @@ const SearchResult: React.FC<Props> = (props) => {
         </button>
       </div>
 
-      <div className="flex items-center justify-start py-[0.375rem]">
-        <div className="w-8 h-8">
-          <img
-            className="w-full h-full object-cover rounded-full"
-            src="https://files.fullstack.edu.vn/f8-prod/courses/13/13.png"
-            alt="course_img"
-          />
-        </div>
-        <span className="text-14 text-text-color line-clamp-2 ml-3 flex-1">
-          Xây Dựng Website với ReactJS Xây Dựng Website với ReactJS Xây Dựng
-          Website với ReactJS Xây Dựng Website với ReactJS Xây Dựng Website với
-          ReactJS
-        </span>
-      </div>
-
-      <div className="flex items-center justify-start py-[0.375rem]">
-        <div className="w-8 h-8">
-          <img
-            className="w-full h-full object-cover rounded-full"
-            src="https://files.fullstack.edu.vn/f8-prod/courses/13/13.png"
-            alt="course_img"
-          />
-        </div>
-        <span className="text-14 text-text-color line-clamp-2 ml-3 flex-1">
-          Xây Dựng Website với ReactJS Xây Dựng Website với ReactJS Xây Dựng
-          Website với ReactJS Xây Dựng Website với ReactJS Xây Dựng Website với
-          ReactJS
-        </span>
-      </div>
-
-      <div className="flex items-center justify-start py-[0.375rem]">
-        <div className="w-8 h-8">
-          <img
-            className="w-full h-full object-cover rounded-full"
-            src="https://files.fullstack.edu.vn/f8-prod/courses/13/13.png"
-            alt="course_img"
-          />
-        </div>
-        <span className="text-14 text-text-color line-clamp-2 ml-3 flex-1">
-          Xây Dựng Website với ReactJS Xây Dựng Website với ReactJS Xây Dựng
-          Website với ReactJS Xây Dựng Website với ReactJS Xây Dựng Website với
-          ReactJS
-        </span>
-      </div>
-
-      <div className="flex items-center justify-start py-[0.375rem]">
-        <div className="w-8 h-8">
-          <img
-            className="w-full h-full object-cover rounded-full"
-            src="https://files.fullstack.edu.vn/f8-prod/courses/13/13.png"
-            alt="course_img"
-          />
-        </div>
-        <span className="text-14 text-text-color line-clamp-2 ml-3 flex-1">
-          Xây Dựng Website với ReactJS Xây Dựng Website với ReactJS Xây Dựng
-          Website với ReactJS Xây Dựng Website với ReactJS Xây Dựng Website với
-          ReactJS
-        </span>
-      </div>
-
-      <div className="flex items-center justify-start py-[0.375rem]">
-        <div className="w-8 h-8">
-          <img
-            className="w-full h-full object-cover rounded-full"
-            src="https://files.fullstack.edu.vn/f8-prod/courses/13/13.png"
-            alt="course_img"
-          />
-        </div>
-        <span className="text-14 text-text-color line-clamp-2 ml-3 flex-1">
-          Xây Dựng Website với ReactJS Xây Dựng Website với ReactJS Xây Dựng
-          Website với ReactJS Xây Dựng Website với ReactJS Xây Dựng Website với
-          ReactJS
-        </span>
-      </div>
-
-      <div className="flex items-center justify-start py-[0.375rem]">
-        <div className="w-8 h-8">
-          <img
-            className="w-full h-full object-cover rounded-full"
-            src="https://files.fullstack.edu.vn/f8-prod/courses/13/13.png"
-            alt="course_img"
-          />
-        </div>
-        <span className="text-14 text-text-color line-clamp-2 ml-3 flex-1">
-          Xây Dựng Website với ReactJS Xây Dựng Website với ReactJS Xây Dựng
-          Website với ReactJS Xây Dựng Website với ReactJS Xây Dựng Website với
-          ReactJS
-        </span>
-      </div>
+      {data.length > 0
+        ? data.map((course) => {
+            if (Number(course.price) === 0) {
+              return (
+                <NavLink key={course.id} to={`/courses/${course.id}`}>
+                  <div className="flex items-center justify-start py-[0.375rem]">
+                    <div className="w-8 h-8">
+                      <img
+                        className="w-full h-full object-cover rounded-full"
+                        src={`${root}/users/image/${course.image}`}
+                        alt={course.name}
+                      />
+                    </div>
+                    <span className="text-14 text-text-color line-clamp-2 ml-3 flex-1">
+                      {course.name}
+                    </span>
+                  </div>
+                </NavLink>
+              );
+            }
+          })
+        : ""}
     </>
   );
 };

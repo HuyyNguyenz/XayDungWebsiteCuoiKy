@@ -8,6 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react/headless";
 import SearchResult from "../SearchResult";
 import useDebounce from "../../hooks/useDebounce";
+import axios from "axios";
+import { root } from "../../utils";
+import { Course } from "../../interface";
 
 const Search: React.FC = () => {
   const $ = document.querySelector.bind(document);
@@ -15,6 +18,7 @@ const Search: React.FC = () => {
   const [showResult, setShowResult] = useState<boolean>(true);
   const [searchValue, setSearchValue] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [dataSearch, setDataSearch] = useState<Array<Course>>([]);
   const debouncedValue: string = useDebounce(searchValue, 800);
 
   useEffect(() => {
@@ -68,13 +72,19 @@ const Search: React.FC = () => {
 
   useEffect(() => {
     if (debouncedValue.length > 1) {
-      const fetchApi = async () => {
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 600);
-      };
-      fetchApi();
+      setLoading(true);
+      setTimeout(() => {
+        axios
+          .post(`${root}/api/search`, { name: debouncedValue })
+          .then((res) => {
+            const data: Array<Course> =
+              res.data.data && setDataSearch(res.data.data);
+            return data;
+          });
+        setLoading(false);
+      }, 500);
+    } else {
+      setDataSearch([]);
     }
   }, [debouncedValue]);
 
@@ -118,8 +128,11 @@ const Search: React.FC = () => {
                 )}
               </div>
 
-              <SearchResult title={"Khoá Học"} />
-              <SearchResult title={"Bài Viết"} />
+              {dataSearch.length > 0 ? (
+                <SearchResult title={"Khoá Học"} data={dataSearch} />
+              ) : (
+                ""
+              )}
             </div>
           </div>
         )}

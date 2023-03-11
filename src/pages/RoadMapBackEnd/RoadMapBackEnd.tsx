@@ -5,14 +5,30 @@ import DefaultLayout from "../../layouts/DefaultLayout";
 import PayCourse from "../../components/PayCourse";
 import htmlCssProImg from "../../assets/images/pay_course.png";
 import { Course } from "../../interface";
+import axios from "axios";
+import { root } from "../../utils";
+import { Helmet } from "react-helmet";
 
 const RoadMapBackEnd: React.FC = () => {
+  const [courses, setCourses] = useState<Array<Course>>([]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    const getCourses = async () => {
+      await axios.get(`${root}/api/courses`).then((res) => {
+        setCourses(res.data.data);
+      });
+    };
+    getCourses();
+  }, []);
+
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>Lộ trình Back-end tại ITGangz</title>
+      </Helmet>
       <div className="flex-1 p-4 mb-20 md:px-8 lg:px-12 w-full overflow-hidden">
         <section>
           <div className="max-w-[52.5rem]">
@@ -56,69 +72,15 @@ const RoadMapBackEnd: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex flex-col items-start justify-start mb-10">
-              <h2 className="text-24 text-title-color font-black">
-                1. Tìm hiểu về ngành IT
-              </h2>
-              <p className="text-14 text-text-color my-4">
-                Để theo ngành IT - Phần mềm cần rèn luyện những kỹ năng nào? Bạn
-                đã có sẵn tố chất phù hợp với ngành chưa? Cùng thăm quan các
-                công ty IT và tìm hiểu về văn hóa, tác phong làm việc của ngành
-                này nhé các bạn.
-              </p>
-              <CoursePreview />
-            </div>
-
-            <div className="flex flex-col items-start justify-start mb-10">
-              <h2 className="text-24 text-title-color font-black">
-                2. HTML và CSS
-              </h2>
-              <p className="text-14 text-text-color my-4">
-                Để học web Front-end chúng ta luôn bắt đầu với ngôn ngữ HTML và
-                CSS, đây là 2 ngôn ngữ có mặt trong mọi website trên internet.
-                Dù bạn có theo Back-end thì công việc của bạn nhiều khi vẫn cần
-                phải ghép dữ liệu với HTML, CSS.
-              </p>
-              <CoursePreview />
-            </div>
-
-            <div className="flex flex-col items-start justify-start mb-10">
-              <h2 className="text-24 text-title-color font-black">
-                3. JavaScript
-              </h2>
-              <p className="text-14 text-text-color my-4">
-                Có rất nhiều ngôn ngữ để bạn có thể làm việc với Back-end, tuy
-                nhiên bạn không cần phải học tất cả. Bạn chỉ cần tập trung vào 1
-                ngôn ngữ là có thể làm việc tốt. Tại đây chúng ta sẽ bắt đầu với
-                ngôn ngữ lập trình Javascript.
-              </p>
-              <CoursePreview />
-            </div>
-
-            <div className="flex flex-col items-start justify-start mb-10">
-              <h2 className="text-24 text-title-color font-black">
-                4. Sử dụng Ubuntu/Linux
-              </h2>
-              <p className="text-14 text-text-color my-4">
-                Cách làm việc với hệ điều hành Ubuntu/Linux qua Windows Terminal
-                & WSL. Khi đi làm, nhiều trường hợp bạn cần nắm vững các dòng
-                lệnh cơ bản của Ubuntu/Linux.
-              </p>
-              <CoursePreview />
-            </div>
-
-            <div className="flex flex-col items-start justify-start mb-10">
-              <h2 className="text-24 text-title-color font-black">
-                5. Libraries and Frameworks
-              </h2>
-              <p className="text-14 text-text-color my-4">
-                Một ứng dụng Back-end hiện đại có thể rất phức tạp, việc sử dụng
-                code thuần (tự tay code từ đầu) không phải là một lựa chọn tốt.
-                Vì vậy các Libraries và Frameworks ra đời nhằm đơn giản hóa,
-                tiết kiệm thời gian và tiền bạc để nhanh chóng tạo ra được sản
-                phẩm cuối cùng.
-              </p>
-              <CoursePreview />
+            <div className="flex flex-col items-start justify-start mb-6">
+              <h1 className="text-28 text-title-color font-black mb-2">
+                Các khoá học Back End
+              </h1>
+              {courses.map((course) => {
+                if (!course.name.includes("React")) {
+                  return <CoursePreview key={course.id} course={course} />;
+                }
+              })}
             </div>
 
             <div className="flex flex-col items-start justify-start">
@@ -138,7 +100,13 @@ const RoadMapBackEnd: React.FC = () => {
                 trang web. Cuối khóa học sẽ được thực hành từ 8 - 10 dự án thực
                 chiến với cấp độ từ dễ đến khó.
               </p>
-              <div className="flex items-center w-full overflow-y-hidden overflow-x-scroll md:flex-none md:grid md:grid-cols-2 md:gap-x-6 lg:grid-cols-3"></div>
+              <div className="flex items-center w-full overflow-y-hidden overflow-x-scroll md:flex-none md:grid md:grid-cols-2 md:gap-x-6 lg:grid-cols-3">
+                {courses.map((course) => {
+                  if (Number(course.price) > 0) {
+                    return <PayCourse course={course} key={course.id} />;
+                  }
+                })}
+              </div>
             </div>
           </div>
         </section>

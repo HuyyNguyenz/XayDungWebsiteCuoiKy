@@ -1,16 +1,12 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
 
-import { Course, PostsType } from "../../interface";
+import { Course } from "../../interface";
 import DefaultLayout from "../../layouts/DefaultLayout";
 import SliderAds from "../../components/SliderAds";
 import PayCourse from "../../components/PayCourse";
 import FreeCourse from "../../components/FreeCourse";
-import Posts from "../../components/Posts";
-import htmlCssProImg from "../../assets/images/pay_course.png";
-import htmlCssImg from "../../assets/images/free_course.png";
-import postImg from "../../assets/images/post.png";
-import logo from "../../assets/images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleRight,
@@ -18,7 +14,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { root } from "../../utils";
-import Courses from "../Courses";
 
 const Home: React.FC = () => {
   const [payCourses, setPayCourses] = useState<Array<Course>>([]);
@@ -32,17 +27,20 @@ const Home: React.FC = () => {
     const payCourses: Array<Course> = [];
     const freeCourses: Array<Course> = [];
 
-    axios.get(`${root}/api/courses`).then((res) => {
-      res.data.data.map((item: Course) => {
-        if (Number(item.price) > 0) {
-          payCourses.push(item);
-          setPayCourses(payCourses);
-        } else {
-          freeCourses.push(item);
-          setFreeCourses(freeCourses);
-        }
+    const getCourses = async () => {
+      await axios.get(`${root}/api/courses`).then((res) => {
+        res.data.data.map((item: Course) => {
+          if (Number(item.price) > 0) {
+            payCourses.push(item);
+            setPayCourses(payCourses);
+          } else {
+            freeCourses.push(item);
+            setFreeCourses(freeCourses);
+          }
+        });
       });
-    });
+    };
+    getCourses();
   }, []);
 
   // const posts: PostsType = {
@@ -62,6 +60,9 @@ const Home: React.FC = () => {
 
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>Học lập trình cùng ITGangz</title>
+      </Helmet>
       <div className="flex-1 p-4 mb-20 md:px-8 lg:pl-5 lg:pr-10 w-full overflow-hidden">
         <SliderAds />
         {/* Pay Courses */}
@@ -105,7 +106,11 @@ const Home: React.FC = () => {
             </div>
             <div className="flex items-center w-full overflow-y-hidden overflow-x-scroll md:flex-none md:grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
               {freeCourses.map((course) => {
-                return <FreeCourse key={course.id} course={course} />;
+                return (
+                  <NavLink key={course.id} to={`/courses/${course.id}`}>
+                    <FreeCourse course={course} />
+                  </NavLink>
+                );
               })}
             </div>
           </div>
