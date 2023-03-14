@@ -19,8 +19,6 @@ const CourseVideoPreview: React.FC<Props> = (props) => {
     document.body.classList.remove("overflow-hidden");
   };
 
-  console.log(video);
-
   return (
     <>
       {isCloseVideo ? (

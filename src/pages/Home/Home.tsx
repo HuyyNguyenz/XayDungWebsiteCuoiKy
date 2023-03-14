@@ -29,7 +29,7 @@ const Home: React.FC = () => {
 
     const getCourses = async () => {
       await axios.get(`${root}/api/courses`).then((res) => {
-        res.data.data.map((item: Course) => {
+        res.data.data.forEach((item: Course) => {
           if (Number(item.price) > 0) {
             payCourses.push(item);
             setPayCourses(payCourses);

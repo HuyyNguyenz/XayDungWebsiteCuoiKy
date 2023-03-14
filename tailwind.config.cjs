@@ -53,10 +53,22 @@ module.exports = {
           "0%": { top: "60%", opacity: "0" },
           "100%": { top: "50%", opacity: "1" },
         },
+        rightToLeft: {
+          "0%": { transform: "translateX(100%)", opacity: "0" },
+          "50%": { transform: "translateX(50%)", opacity: "0.5" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+        leftToRight: {
+          "0%": { transform: "translateX(0)", opacity: "1" },
+          "50%": { transform: "translateX(50%)", opacity: "0.5" },
+          "100%": { transform: "translateX(100%)", opacity: "0" },
+        },
       },
       animation: {
         fade: "fade .3s ease-in-out",
         "bottom-up": "bottom-up .3s ease-in-out",
+        rightToLeft: "rightToLeft .4s linear",
+        leftToRight: "leftToRight .4s linear",
       },
       backgroundImage: {
         "login-background": "url('/src/assets/images/bg_login_register.jpg')",

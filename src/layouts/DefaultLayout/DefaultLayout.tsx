@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Footer from "../../components/Footer";
 import FullStackNews from "../../components/FullStackNews";
 import Header from "../../components/Header";

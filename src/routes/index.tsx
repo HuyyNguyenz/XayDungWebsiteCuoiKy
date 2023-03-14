@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 
 import { RouteType } from "../interface";
+import LearningCourse from "../pages/LearningCourse";
 import CourseDetail from "../pages/CourseDetail";
 import Courses from "../pages/Courses";
 import Home from "../pages/Home";
@@ -44,6 +45,7 @@ const publicRoutes: Array<RouteType> = [
     component: Register,
   },
   { path: "/courses/:courseId", component: CourseDetail },
+  { path: "/learning/:courseId", component: LearningCourse },
 ];
 
 const privateRoutes: Array<RouteType> = [];

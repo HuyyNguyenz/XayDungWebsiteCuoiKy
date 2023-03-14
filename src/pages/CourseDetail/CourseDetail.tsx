@@ -1,9 +1,9 @@
 import DefaultLayout from "../../layouts/DefaultLayout";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Course, PartVideo, Video } from "../../interface";
 import axios from "axios";
 import { root } from "../../utils";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBatteryFull,
@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import CourseVideoPreview from "../../components/CourseVideoPreview";
 import { Helmet } from "react-helmet";
+import ListCourseVideo from "../../components/ListCourseVideo";
 
 const CourseDetail = () => {
   const [isOpenVideo, setOpenVideo] = useState<boolean>(false);
@@ -38,7 +39,7 @@ const CourseDetail = () => {
     const getCourses = async () => {
       await axios.get(`${root}/api/courses`).then((res) => {
         if (res.data.data.length > 0) {
-          res.data.data.map((course: Course) => {
+          res.data.data.forEach((course: Course) => {
             if (course.id + "" === courseId) {
               setCourse(course);
             }
@@ -54,7 +55,7 @@ const CourseDetail = () => {
       await axios.get(`${root}/api/parts-video`).then((res) => {
         if (res.data.length > 0) {
           const partVideoArray: Array<PartVideo> = [];
-          res.data.map((partVideo: PartVideo) => {
+          res.data.forEach((partVideo: PartVideo) => {
             if (partVideo.course_id + "" === courseId) {
               partVideoArray.push(partVideo);
             }
@@ -69,11 +70,11 @@ const CourseDetail = () => {
   useEffect(() => {
     if (partsVideo.length > 0) {
       const videoArray: Array<Video> = [];
-      partsVideo.map((partVideo: PartVideo) => {
+      partsVideo.forEach((partVideo: PartVideo) => {
         const getVideos = async () => {
           await axios.get(`${root}/api/videos`).then((res) => {
             if (res.data.length > 0) {
-              res.data.map((video: Video) => {
+              res.data.forEach((video: Video) => {
                 if (video.part_id === partVideo.id) {
                   videoArray.push(video);
                 }
@@ -89,7 +90,7 @@ const CourseDetail = () => {
 
   const checkVideo: (id: string) => Array<Video> = (id) => {
     let newArray: Array<Video> = [];
-    videos.map((video: Video) => {
+    videos.forEach((video: Video) => {
       if (video.part_id === id) {
         newArray.push(video);
       }
@@ -106,6 +107,21 @@ const CourseDetail = () => {
     if (isCloseVideo === true) {
       setOpenVideo(false);
     }
+  };
+
+  const handleOpenListVideo = (id: string) => {
+    const e: HTMLCollectionOf<Element> = document.getElementsByClassName(id);
+    const partId: string = (e[0] as HTMLElement).className.split(" ")[1];
+    if (partId === id) {
+      (e[0] as HTMLElement).classList.toggle("hidden");
+    }
+  };
+
+  const handleOpenAllListVideo = () => {
+    const e: NodeList = document.querySelectorAll(".w-full.hidden");
+    Array.from(e).forEach((item: Node) => {
+      (item as HTMLElement).classList.toggle("hidden");
+    });
   };
 
   return (
@@ -134,7 +150,10 @@ const CourseDetail = () => {
                   <strong>{videos.length}</strong> bài học
                 </span>
               </div>
-              <span className="text-14 text-primary-color font-semibold cursor-pointer hover:opacity-90">
+              <span
+                onClick={handleOpenAllListVideo}
+                className="text-14 text-primary-color font-semibold cursor-pointer hover:opacity-90"
+              >
                 Mở rộng tất cả
               </span>
             </div>
@@ -152,19 +171,26 @@ const CourseDetail = () => {
                   })
                   .map((partVideo: PartVideo) => {
                     const count: number = checkVideo(partVideo.id).length;
+                    const listVideo: Array<Video> = checkVideo(partVideo.id);
                     return (
-                      <li
-                        key={partVideo.id}
-                        className="flex items-center justify-between bg-[#f5f5f5] py-3 px-8 rounded-md cursor-pointer mb-2"
-                      >
-                        <div className="text-16 font-semibold text-text-color">
-                          <FontAwesomeIcon className="mr-4" icon={faPlus} />
-                          <span>{partVideo.name}</span>
-                        </div>
-                        <span className="text-14 text-text-color">
-                          {count} bài học
-                        </span>
-                      </li>
+                      <Fragment key={partVideo.id}>
+                        <li
+                          onClick={() => handleOpenListVideo(partVideo.id)}
+                          className="flex items-center justify-between bg-[#f5f5f5] py-3 px-8 rounded-md cursor-pointer mb-2 select-none"
+                        >
+                          <div className="text-16 font-semibold text-text-color">
+                            {<FontAwesomeIcon icon={faPlus} />}
+                            <span className="ml-4">{partVideo.name}</span>
+                          </div>
+                          <span className="text-14 text-text-color">
+                            {count} bài học
+                          </span>
+                        </li>
+                        <ListCourseVideo
+                          videos={listVideo}
+                          partId={partVideo.id}
+                        />
+                      </Fragment>
                     );
                   })}
               </ul>
@@ -191,9 +217,11 @@ const CourseDetail = () => {
             <h5 className="text-32 font-normal text-primary-color my-4">
               Miễn phí
             </h5>
-            <button className="min-w-[11.25rem] text-16 font-semibold py-2 px-4 bg-primary-color text-white rounded-full mb-4 hover:opacity-90">
-              VÀO HỌC
-            </button>
+            <NavLink to={`/learning/${courseId}`}>
+              <button className="min-w-[11.25rem] text-16 font-semibold py-2 px-4 bg-primary-color text-white rounded-full mb-4 hover:opacity-90">
+                VÀO HỌC
+              </button>
+            </NavLink>
             <ul className="text-14 text-text-color">
               <li className="mb-2">
                 <FontAwesomeIcon icon={faPalette} />

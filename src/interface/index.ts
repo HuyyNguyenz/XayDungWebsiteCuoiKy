@@ -1,4 +1,5 @@
 export interface User {
+    id?: string;
     username: string;
     email: string;
     password: string;
@@ -32,6 +33,19 @@ export interface Video {
     duration: string;
     date_posted: string;
     part_id: string;
+}
+
+export interface Comment {
+    id?: string;
+    content: string;
+    date_posted: string;
+    account_id: string;
+    video_id: string;
+}
+
+export interface EditComment {
+    id: string;
+    state: boolean
 }
 
 export interface PostsType {

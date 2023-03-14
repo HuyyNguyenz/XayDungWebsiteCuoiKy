@@ -76,7 +76,10 @@ const RoadMapFrontEnd: React.FC = () => {
                 Các khoá học Front End
               </h1>
               {courses.map((course) => {
-                if (course.category_id === "Cat01") {
+                if (
+                  course.category_id === "Cat01" &&
+                  Number(course.price) === 0
+                ) {
                   return <CoursePreview key={course.id} course={course} />;
                 }
               })}
