@@ -51,12 +51,12 @@ const Comments: React.FC<Props> = (props) => {
       });
       setCommentsForVideo(commentArray);
     }
-  }, [comments.length]);
+  }, [comments]);
 
   useEffect(() => {
     if (comments.length > 0) {
       const getUsers = async () => {
-        await axios.get(`${root}/api/accounts`).then((res) => {
+        await axios.get(`${root}/api/account`).then((res) => {
           if (res.data.length > 0) {
             setUsers(res.data);
           }
@@ -64,7 +64,7 @@ const Comments: React.FC<Props> = (props) => {
       };
       getUsers();
     }
-  }, [comments.length]);
+  }, [comments]);
 
   const getUserForComment = (id: string) => {
     let author: string = "";
@@ -250,7 +250,14 @@ const Comments: React.FC<Props> = (props) => {
         <hr />
         <div className="mt-12">
           {commentsForVideo.map((comment: Comment) => {
+            let visible: boolean = false;
             const author: string = getUserForComment(comment.account_id);
+            const currentId: string = sessionStorage.getItem(
+              "user_token"
+            ) as string;
+            if (currentId === comment.account_id) {
+              visible = true;
+            }
             return (
               <div key={comment.id} className="mb-4">
                 {author ? (
@@ -269,27 +276,31 @@ const Comments: React.FC<Props> = (props) => {
                         <p className="mt-4">{comment.content} </p>
                       </div>
                     </div>
-                    <div className="flex items-center justify-start text-14 font-semibold ml-14">
-                      <button
-                        onClick={() =>
-                          handleEditComment(
-                            comment.id as string,
-                            comment.content
-                          )
-                        }
-                        className="text-text-color p-2 mr-2"
-                      >
-                        Sửa
-                      </button>
-                      <button
-                        onClick={() =>
-                          handleDeleteComment(comment.id as string)
-                        }
-                        className="text-red-600 p-2"
-                      >
-                        Xoá
-                      </button>
-                    </div>
+                    {visible ? (
+                      <div className="flex items-center justify-start text-14 font-semibold ml-14">
+                        <button
+                          onClick={() =>
+                            handleEditComment(
+                              comment.id as string,
+                              comment.content
+                            )
+                          }
+                          className="text-text-color p-2 mr-2"
+                        >
+                          Sửa
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleDeleteComment(comment.id as string)
+                          }
+                          className="text-red-600 p-2"
+                        >
+                          Xoá
+                        </button>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </>
                 ) : (
                   ""

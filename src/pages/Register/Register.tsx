@@ -280,7 +280,7 @@ const Register: React.FC = () => {
               </div>
               <input
                 onClick={handleSubmit}
-                className="mt-6 w-full py-2 bg-gradient-to-br from-purple-color to-pink-color text-white text-16 font-semibold rounded-full cursor-pointer select-none"
+                className="mt-6 w-full py-2 bg-gradient-to-br from-purple-color to-pink-color text-white text-16 font-semibold rounded-full cursor-pointer select-none transition-all ease-linear duration-200"
                 type="submit"
                 name="register"
                 id="register"

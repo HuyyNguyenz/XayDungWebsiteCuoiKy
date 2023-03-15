@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, useState } from "react";
+import { BaseSyntheticEvent, useState, useEffect } from "react";
 import { Link, NavigateFunction, NavLink, useNavigate } from "react-router-dom";
 
 import { faSquareFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -10,6 +10,9 @@ import { root } from "../../utils";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 const Login: React.FC = () => {
   const [isOpenLoginForm, setOpenLoginForm] = useState<boolean>(false);
@@ -154,7 +157,6 @@ const Login: React.FC = () => {
                   Sử dụng tài khoản cá nhân
                 </span>
               </div>
-
               <div className="flex items-center justify-start px-5 py-2 border-2 border-solid border-border-color rounded-full mb-4 hover:bg-border-color cursor-pointer">
                 <img
                   src="https://accounts.fullstack.edu.vn/assets/images/signin/google-18px.svg"
@@ -172,7 +174,6 @@ const Login: React.FC = () => {
                   Tiếp tục với Facebook
                 </span>
               </div>
-
               <div className="flex items-center justify-start px-5 py-2 border-2 border-solid border-border-color rounded-full mb-4 hover:bg-border-color cursor-pointer">
                 <FontAwesomeIcon className="w-5 h-5" icon={faGithub} />
                 <span className="ml-6 font-semibold">Tiếp tục với Github</span>
@@ -189,7 +190,7 @@ const Login: React.FC = () => {
 
           {isOpenLoginForm ? (
             <div className="mt-2">
-              <span className="text-14 text-primary-color font-semibold">
+              <span className="text-14 text-primary-color font-semibold cursor-pointer">
                 Quên mật khẩu?
               </span>
             </div>

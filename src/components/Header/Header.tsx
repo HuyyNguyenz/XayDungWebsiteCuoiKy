@@ -42,16 +42,9 @@ const Header: React.FC = () => {
       await axios
         .post(`${root}/api/account`, { id: user_token })
         .then((res) => {
-          const data: User = res.data && {
-            username: res.data.username,
-            email: res.data.email,
-            password: res.data.password,
-            image: res.data.image,
-            role_id: res.data.role_id,
-            firstName: res.data.first_name,
-            lastName: res.data.last_name,
-          };
-          setUserData(data);
+          if (res.data) {
+            setUserData(res.data);
+          }
         });
     };
     getUserData();

@@ -44,9 +44,7 @@ const UserSetting: React.FC<Props> = (props) => {
               <div className="w-12 h-12 my-[0.625rem]">
                 <img
                   className="w-full h-full rounded-full object-cover"
-                  src={
-                    data.image ? `${root}/users/image/${data.image}` : userImg
-                  }
+                  src={userImg}
                   alt={data.username}
                 />
               </div>
@@ -84,7 +82,7 @@ const UserSetting: React.FC<Props> = (props) => {
         >
           <img
             className="w-full h-full rounded-full"
-            src={data.image ? `${root}/users/image/${data.image}` : userImg}
+            src={userImg}
             alt={data.username}
           />
         </div>

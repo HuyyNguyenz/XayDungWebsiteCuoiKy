@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Video } from "../../interface";
@@ -23,7 +23,7 @@ const CourseVideoPreview: React.FC<Props> = (props) => {
     <>
       {isCloseVideo ? (
         ""
-      ) : (
+      ) : video ? (
         <>
           <div className="fixed center_item min-w-[60vw] px-10 py-5 rounded-2xl animate-fade bg-white z-40">
             <div className="flex items-center justify-between pb-2">
@@ -56,6 +56,8 @@ const CourseVideoPreview: React.FC<Props> = (props) => {
           </div>
           <div onClick={handleCloseVideo} className="overlay z-30"></div>
         </>
+      ) : (
+        ""
       )}
     </>
   );
