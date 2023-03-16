@@ -2,10 +2,16 @@
 
 ## Công nghệ sử dụng
 
+### Front-end
+
 - ReactJS
-- Redux
 - TailwindCss
 - Axios
 - React Router DOM
 
-![Ảnh bìa](/src/assets/images/gumball.jpg)
+### Back-end
+
+- Laravel
+- Boostrap
+
+![Ảnh bìa](/src/assets/images/ITGangz.jpg)
